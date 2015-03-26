@@ -8,6 +8,7 @@
 #include <inttypes.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/types.h>
 
 int main(int argc, char const *argv[]) {
 	
