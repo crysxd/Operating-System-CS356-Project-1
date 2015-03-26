@@ -42,7 +42,7 @@ int main(int argc, char const *argv[]) {
 
 	/* Code for error handling */
 	else if(pid < 0) {
-		printf("ERROR: Unable to for process!\n");
+		printf("ERROR: Unable to fork process!\n");
 		return 1;
 	}
 
