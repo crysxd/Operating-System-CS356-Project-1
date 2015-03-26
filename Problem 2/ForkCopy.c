@@ -46,7 +46,5 @@ int main(int argc, char const *argv[]) {
 		return 1;
 	}
 
-	/* Print success and exit */
-	printf("SUCCESS.\n");
 	return 0;
 }
