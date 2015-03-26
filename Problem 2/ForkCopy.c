@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
 	pid_t pid = fork();
 
 	/* Code for parent */
-	if(pid != 0) {
+	if(pid > 0) {
 		/* Wait for child */
 		int status = 0;
 		wait(&status);
