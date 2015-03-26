@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int main(int argc, char const *argv[]) {
 	
@@ -18,6 +19,9 @@ int main(int argc, char const *argv[]) {
 		/* Wait for child */
 		int status = 0;
 		wait(&status);
+
+		/* Query the plain exit status */
+		status = WEXITSTATUS(status);
 
 		/* Print success or error text */
 		if(status != 0) {
