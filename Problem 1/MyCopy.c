@@ -14,14 +14,14 @@ int main(int argc, char const *argv[]) {
 	/* Check number of arguments and print manual */
 	if(argc < 3) {
 		printf("ERROR: Too few arguments. Usage: ./MyCopy src dest\n");
-		return -3;
+		return 3;
 	}
 
 	/* Open file pointer for source and handle error */
 	FILE *src = fopen(argv[1], "r");
 	if(src == NULL) {
 		printf("ERROR: Unable to open source file \"%s\"\n", argv[1]);
-		return -1;
+		return 1;
 	}
 
 	/* Open file pointer for destination and handle error */
@@ -29,7 +29,7 @@ int main(int argc, char const *argv[]) {
 	if(dest == NULL) {
 		printf("ERROR: Unable to create destination file \"%s\"\n", argv[2]);
 		fclose(src);
-		return -2;
+		return 2;
 	}
 
 	/* Create buffer for efficent copying and counters */
