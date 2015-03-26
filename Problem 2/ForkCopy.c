@@ -25,7 +25,7 @@ int main(int argc, char const *argv[]) {
 
 		/* Print success or error text */
 		if(status != 0) {
-			printf("ERROR: child process finished abnormally with status %d\n", status);
+			printf("ERROR: Child process finished abnormally with status %d\n", status);
 		} else {
 			printf("SUCCESS: Child finished normally.\n");
 		}
