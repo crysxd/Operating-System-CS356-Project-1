@@ -1,7 +1,7 @@
 /*
  * MyCopy.c
  * Author: Christian Würthner
- * Description: Simple copy program receiving the input and output files with * the runtime arguments.
+ * Description: Simple copy program.
  */
 
 #include <stdio.h>
