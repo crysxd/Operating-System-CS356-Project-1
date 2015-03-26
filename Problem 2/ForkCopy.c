@@ -16,7 +16,7 @@ int main(int argc, char const *argv[]) {
 	/* Code for parent */
 	if(pid != 0) {
 		/* Wait for child */
-		int16_t status = 0;
+		int status = 0;
 		wait(&status);
 
 		/* Print success or error text */
