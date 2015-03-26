@@ -43,7 +43,7 @@ int main(int argc, char const *argv[]) {
 	/* Code for error handling */
 	else if(pid < 0) {
 		printf("ERROR: Unable to for process!\n");
-		return -1;
+		return 1;
 	}
 
 	/* Print success and exit */
