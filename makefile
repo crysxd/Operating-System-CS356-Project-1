@@ -2,7 +2,7 @@ CC     = @/usr/bin/gcc
 CFLAGS = -Wall -g -std=c99
 ECHO   = @echo
 
-all: directories MyCopy ForkCopy PipeCopy StopWatch MyShell complete
+all: directories MyCopy ForkCopy PipeCopy StopWatch MyShell MoreShell  complete
 
 clean:
 	@rm -rf bin
@@ -31,6 +31,10 @@ StopWatch:
 MyShell:
 	$(CC) $(CFLAGS) "Problem 5/MyShell.c" -o bin/MyShell
 	$(ECHO) "Build MyShell {Problem 5}"
+
+MoreShell:
+	$(CC) $(CFLAGS) "Problem 6/MoreShell.c" -o bin/MoreShell
+	$(ECHO) "Build MoreShell {Problem 6}"
 
 complete:
 	$(ECHO) "All binaries build to directory 'bin/'"
