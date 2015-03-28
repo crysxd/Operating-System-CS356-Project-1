@@ -19,7 +19,7 @@
 #define BLOCK_SIZE 1024
 
 /* Declare function to copy from one file handler to an other */
-void copy(int src, int dest, int pid);
+int16_t copy(int src, int dest, int pid);
 
 int main(int argc, char const *argv[]) {
 	/* Create ordinary pipe */
@@ -102,7 +102,12 @@ int main(int argc, char const *argv[]) {
 		}		
 
 		/* Copy from file to pipe */
-		copy(src, fd[1], 1);
+		if(copy(src, fd[1], 2) < 0) {
+			printf("ERROR: error while copying: %s\n", strerror(errno));	
+			close(src);
+			close(fd[1]);
+			return 2;
+		}
 
 		/* Close file and pipe */
 		close(src);
@@ -119,13 +124,18 @@ int main(int argc, char const *argv[]) {
 		/* Open file pointer for destination and handle error */
 		int dest = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 		if(dest < 0) {
-			printf("ERROR: Unable to open destination file \"%s\" (%s)\n", argv[2], strerror(errno));	
+			printf("ERROR: Unable to open destination file \"%s\" (%s)\n", strerror(errno));	
 			close(fd[0]);
 			return 1;
 		}	
 
 		/* Copy from pipe to file */
-		copy(fd[0], dest, 2);
+		if(copy(fd[0], dest, 2) < 0) {
+			printf("ERROR: error while copying: %s\n", argv[2], strerror(errno));	
+			close(dest);
+			close(fd[0]);
+			return 2;
+		}
 
 		/* Close file and pipe */
 		close(dest);
@@ -138,11 +148,7 @@ int main(int argc, char const *argv[]) {
 	if(child_1 < 0 || child_2 < 0) {
 		printf("ERROR: Unable to for process!\n");
 
-		/* Kill child 1 if already created */
-		if(child_1 > 0) {
-			kill(child_1, SIGKILL);
-			wait(NULL);
-		}
+		/* If child 1 is already forked, we just let it finish normally */
 
 		return 1;
 	}
@@ -151,7 +157,7 @@ int main(int argc, char const *argv[]) {
 }
 
 /* Copies the content from the src file handler to the dest file handler. */
-void copy(int src, int dest, int pid) {
+int16_t copy(int src, int dest, int pid) {
 	/* Create buffer and counter */
 	uint8_t buffer[BLOCK_SIZE];
 	int16_t read_count = 0;
@@ -161,4 +167,6 @@ void copy(int src, int dest, int pid) {
 		printf("[%d] %d bytes copied...\n", pid, read_count);
 		write(dest, buffer, read_count);
 	}
+
+	return read_count;
 }
