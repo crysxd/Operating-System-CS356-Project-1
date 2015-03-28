@@ -137,6 +137,13 @@ int main(int argc, char const *argv[]) {
 	/* Code for error handling */
 	if(child_1 < 0 || child_2 < 0) {
 		printf("ERROR: Unable to for process!\n");
+
+		/* Kill child 1 if already created */
+		if(child_1 > 0) {
+			kill(child_1, SIGKILL);
+			wait(NULL);
+		}
+
 		return 1;
 	}
 
