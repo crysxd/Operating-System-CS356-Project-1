@@ -4,6 +4,8 @@
  * Description: Use MyCopy to copy a file in a new process.
  */
 
+#define EXECLP_ERROR 42
+
 #include <stdio.h>
 #include <inttypes.h>
 #include <unistd.h>
@@ -27,6 +29,11 @@ int main(int argc, char const *argv[]) {
 		/* Print success or error text */
 		if(status != 0) {
 			printf("ERROR: Child process finished abnormally with status %d\n", status);
+
+			if(status == EXECLP_ERROR) {
+ 				printf("HINT: execlp() failed. Please make shure that you call ForkCopy in the bin folder and all needed programs are also in the bin folder.\n");
+ 			}
+
 		} else {
 			printf("SUCCESS: Child finished normally.\n");
 		}
@@ -39,6 +46,7 @@ int main(int argc, char const *argv[]) {
 	/* Code for child */
 	else if(pid == 0) {
 		execlp("./MyCopy", argv[0], argv[1], argv[2], NULL);
+		return EXECLP_ERROR;
 	}
 
 	/* Code for error handling */
