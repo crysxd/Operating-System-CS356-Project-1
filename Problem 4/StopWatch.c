@@ -9,6 +9,7 @@
 #define COPY_PROGRAMS {"cp", "./MyCopy", "./ForkCopy", "./PipeCopy"}
 #define SAMPLE_FILE_BLOCK_SIZE 1024 /* 1 KiB */
 #define SAMPLE_FILE_SIZE SAMPLE_FILE_BLOCK_SIZE * 1024 * 16 /* 16 MiB */
+#define EXECLP_ERROR 42
 
 #include <stdio.h>
 #include <inttypes.h>
@@ -79,6 +80,14 @@ int main(int argc, char const *argv[]) {
  		/* Check success */
  		if(status != 0) {
  			printf("ERROR: Child process finished abnormally with status %d\n", status);
+
+ 			if(status == EXECLP_ERROR) {
+ 				printf("HINT: execlp() failed. Please make shure that you call PipeCopy in the bin folder and all needed programs are also in the bin folder.\n");
+ 			}
+
+ 			/* cleanup the files */
+ 			clean_up();
+
  			return 2;
  		}
 
@@ -167,8 +176,7 @@ int call_copy(char* copy_program_name) {
 		execlp(copy_program_name, copy_program_name, SAMPLE_FILE_NAME, SAMPLE_FILE_COPY_NAME, NULL);
 
 		/* If this code is executed, execlp failed. */
-		printf("ERROR: execlp failed. Are you in the bin directory?\n");
-		exit(1);
+		exit(EXECLP_ERROR);
 	}
 
 	/* Error handling */
