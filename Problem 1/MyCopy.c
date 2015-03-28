@@ -6,6 +6,8 @@
 
 #include <stdio.h>
 #include <inttypes.h>
+#include <string.h>
+#include <errno.h>
 
 /* Size of the data blocks copied in bytes */
 #define BLOCK_SIZE 1024
@@ -20,14 +22,14 @@ int main(int argc, char const *argv[]) {
 	/* Open file pointer for source and handle error */
 	FILE *src = fopen(argv[1], "r");
 	if(src == NULL) {
-		printf("ERROR: Unable to open source file \"%s\"\n", argv[1]);
+		printf("ERROR: Unable to open source file \"%s\" (%s)\n", argv[1], strerror(errno));
 		return 1;
 	}
 
 	/* Open file pointer for destination and handle error */
 	FILE *dest = fopen(argv[2], "w+");
 	if(dest == NULL) {
-		printf("ERROR: Unable to create destination file \"%s\"\n", argv[2]);
+		printf("ERROR: Unable to create destination file \"%s\" (%s)\n", argv[2], strerror(errno));
 		fclose(src);
 		return 2;
 	}
