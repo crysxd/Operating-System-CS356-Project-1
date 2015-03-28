@@ -124,14 +124,14 @@ int main(int argc, char const *argv[]) {
 		/* Open file pointer for destination and handle error */
 		int dest = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 		if(dest < 0) {
-			printf("ERROR: Unable to open destination file \"%s\" (%s)\n", strerror(errno));	
+			printf("ERROR: Unable to open destination file \"%s\" (%s)\n", argv[2], strerror(errno));	
 			close(fd[0]);
 			return 1;
 		}	
 
 		/* Copy from pipe to file */
 		if(copy(fd[0], dest, 2) < 0) {
-			printf("ERROR: error while copying: %s\n", argv[2], strerror(errno));	
+			printf("ERROR: error while copying: %s\n", strerror(errno));	
 			close(dest);
 			close(fd[0]);
 			return 2;
