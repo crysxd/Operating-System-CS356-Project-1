@@ -4,7 +4,7 @@
  * Description: Simple shell application with arguments.
  */
 
-#include "Moreshell.h"
+#include "MoreShell.h"
 
 int main(int argc, char const *argv[]) {
 	/* Create buffer for command  and current directory */
