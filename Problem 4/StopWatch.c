@@ -10,6 +10,7 @@
 #define SAMPLE_FILE_BLOCK_SIZE 1024 /* 1 KiB */
 #define SAMPLE_FILE_SIZE SAMPLE_FILE_BLOCK_SIZE * 1024 * 16 /* 16 MiB */
 #define EXECLP_ERROR 42
+#define _POSIX_C_SOURCE 199309L
 
 #include <stdio.h>
 #include <inttypes.h>
@@ -26,12 +27,9 @@
 /* Struct for all necessary data for measuring the elapsed time with both methods */
 typedef struct {
  	char* program_name;
- 	clock_t start_1;
- 	clock_t end_1;
- 	struct timeval start_2;
- 	struct timeval end_2;
- 	double elapsed_ms_1;
- 	double elapsed_ms_2;
+ 	double start_times[3];
+ 	double end_times[3];
+ 	double elapsed_ms[3];
 } stopwatch_t;
 
 /* Creates a sample file with the size defined in SAMPLE_FILE_SIZE */
@@ -52,6 +50,9 @@ void start_stopwatch(stopwatch_t *time);
 /* Sets the stop fields in time to the current time and calculates the elapsed time */
 void stop_stopwatch(stopwatch_t *time);
 
+/* Sets the current times in the given double array */
+void set_times(double *times);
+
 int main(int argc, char const *argv[]) {
  	/* create a sample file to test the copy processes */
  	create_sample_file();
@@ -59,17 +60,16 @@ int main(int argc, char const *argv[]) {
  	/* Create necessary fields */
  	char *programs[] = COPY_PROGRAMS;
  	uint8_t program_count = sizeof(programs)/sizeof(char*);
- 	stopwatch_t times[program_count];
+ 	stopwatch_t *times = malloc(sizeof(stopwatch_t) * program_count);
  	int status;
 
  	/* Iterate over all processes to test */
- 	for(uint8_t i=0; i<program_count; i++) {
+ 	for(uint16_t i=0; i<program_count; i++) {
  		/* Set program name */
  		times[i].program_name = programs[i];
 
  		/* Save start time */
- 		times[i].start_1 = 1;
- 		start_stopwatch(times+i);
+ 		start_stopwatch(times + i);
 
  		/* Copy and wait */
  		status = call_copy(programs[i]);
@@ -92,20 +92,22 @@ int main(int argc, char const *argv[]) {
  		}
 
  		/* Calculated time elapsed */
- 		stop_stopwatch(times+i);
+ 		stop_stopwatch(times + i);
  	}
 
  	/* clean up all files created */
  	clean_up();
 
  	/* Print results */
- 	printf("RESULT:\n===================================================\n");
- 	printf("|Program\t | clock()\t | gettimeofday() |\n");
- 	printf("---------------------------------------------------\n");
+ 	printf("RESULT:\n");
+ 	printf("==================================================================================\n");
+ 	printf("| %-14s | clock()\t | gettimeofday()\t | clock_gettime()\t |\n", "Program");
+ 	printf("----------------------------------------------------------------------------------\n");
  	for(uint8_t i=0; i<program_count; i++) {
- 		printf("|%-14s | %.3fms\t | %.3fms\t  |\n", times[i].program_name, times[i].elapsed_ms_1, times[i].elapsed_ms_2);
+ 		printf("| %-14s | %.3fms\t | %.12fms\t | %.12fms\t |\n", 
+ 			times[i].program_name, times[i].elapsed_ms[0], times[i].elapsed_ms[1], times[i].elapsed_ms[2]);
  	}
- 	printf("===================================================\n");
+ 	printf("==================================================================================\n");
 
  	return 0;
  }
@@ -190,16 +192,30 @@ int call_copy(char* copy_program_name) {
 
 void start_stopwatch(stopwatch_t *time) {
 	/* Set start times */
-	time->start_1 = 5;
-	gettimeofday(&(time->start_2), NULL); 
+	set_times(time->start_times);
 }
 
 void stop_stopwatch(stopwatch_t *time) {
-	/* Set stop times */
-	time->end_1 = clock();
-	gettimeofday(&(time->end_2), NULL);
+	/* Set end times */
+	set_times(time->end_times);
 
 	/* Calculate elapsed time */
-	time->elapsed_ms_1 = ((double) (time->end_1 - time->start_1)) / CLOCKS_PER_SEC * 1000.;
-	time->elapsed_ms_2 = ((time->end_2.tv_sec - time->start_2.tv_sec) * 1000000 + time->end_2.tv_usec-time->start_2.tv_usec) / 1000.;
+	for(uint8_t i=0; i<sizeof(time->elapsed_ms); i++) {
+		time->elapsed_ms[i] = time->end_times[i] - time->start_times[i];
+	}
+}
+
+void set_times(double *times) {
+	/* Set start time for clock() */
+	times[0] = (double) clock() / CLOCKS_PER_SEC / 1000.;
+
+	/* Set start time for gettimeofday() */
+	struct timeval tv;
+	gettimeofday(&tv, NULL); 
+	times[1] = tv.tv_sec * 1000. + tv.tv_usec / 1000.;
+
+	/* Set start time for clock_gettime() */
+	struct timespec ts;
+	clock_gettime(CLOCK_REALTIME, &ts);
+	times[2] = ts.tv_sec * 1000. + ts.tv_nsec / 1000000.;
 }
