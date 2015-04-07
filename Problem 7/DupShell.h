@@ -8,7 +8,8 @@
 #define COMMAND_MAX_LENGTH 1024
 #define COMMAND_MAX_PARTS 64
 #define COMMAND_MAX_PART_LENGTH 128
-
+#define _POSIX_SOURCE
+ 
 #include <stdio.h>
 #include <stdbool.h>
 #include <inttypes.h>
