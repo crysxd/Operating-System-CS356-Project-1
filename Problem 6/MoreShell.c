@@ -58,26 +58,6 @@ void explode_command(char *command, char **parts, uint16_t max_parts) {
 
 	/* Iterate over commanf */
 	while(command[i++] != 0) {
-		/* If the current char is a quote, skip until the next quote */
-		if(i == part_start && command[i] == '\"') {
-			/* Search end */
-			part_start = ++i;
-			i = strchr(command+i, '\"') - command;
-
-			/* Force end part */
-			force_end_part = true;
-		}
-
-		/* If the current char is a quote, skip until the next quote */
-		if(i == part_start && command[i] == '\'') {
-			/* Search end */
-			part_start = ++i;
-			i = strchr(command+i, '\'') - command;
-
-			/* Force end part */
-			force_end_part = true;
-		}
-
 		/* If the current char is a space or we are at the end */
 		if(force_end_part || command[i] == ' ' || i == command_length - 1) {
 			/* Copy the current part in the parts array */
