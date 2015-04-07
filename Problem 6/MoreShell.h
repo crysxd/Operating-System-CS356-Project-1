@@ -4,7 +4,7 @@
  * Description: Simple shell application with arguments.
  */
 
-#define COMMAND_PROMPT "myshell:%s> "
+#define COMMAND_PROMPT "myshell> "
 #define COMMAND_MAX_LENGTH 1024
 #define COMMAND_MAX_PARTS 64
 #define COMMAND_MAX_PART_LENGTH 128
@@ -21,5 +21,4 @@
 
 void explode_command(char *command, char **parts, uint16_t max_parts);
 bool is_exit_command(char **parts);
-bool is_cd_command(char **parts);
 void execute_command(char **parts);
