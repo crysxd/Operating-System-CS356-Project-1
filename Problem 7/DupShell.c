@@ -7,8 +7,8 @@
 #include "DupShell.h"
 
 int main(int argc, char const *argv[]) {
-	/* Create buffer for command  and current directory */
-	char command[COMMAND_MAX_LENGTH], cwd[COMMAND_MAX_LENGTH];
+	/* Create buffer for command */
+	char command[COMMAND_MAX_LENGTH];
 
 	/* Create buffer for the command chunks */
 	char *command_parts[COMMAND_MAX_PARTS];
@@ -20,14 +20,8 @@ int main(int argc, char const *argv[]) {
 
 	/* Endless loop, only stop looping when exit command is executed */
 	while(1) {
-		/* get current directory */
-		if(getcwd(cwd, COMMAND_MAX_LENGTH) == NULL) {
-			char *buf = "Unknown";
-			memcpy(cwd, buf, strlen(buf));
-		}
-
 		/* Print prompt */
-		printf(COMMAND_PROMPT, cwd);
+		printf(COMMAND_PROMPT);
 
 		/* Read command */
 		fgets(command, COMMAND_MAX_LENGTH, stdin);
@@ -38,11 +32,6 @@ int main(int argc, char const *argv[]) {
 		/* Check if the command is exit */
 		if(is_exit_command(command_parts)) {
 			break;
-		}
-
-		/* Check if the command is cd */
-		if(is_cd_command(command_parts)) {
-			continue;
 		}
 
 		/* Execute command */
@@ -116,24 +105,6 @@ void explode_command(char *command, char **parts, uint16_t max_parts) {
 
 bool is_exit_command(char **parts) {
 	return strcmp(parts[0], "exit") == 0;
-}
-
-bool is_cd_command(char **parts) {
-	if(strcmp(parts[0], "cd") == 0) {
-		if(strlen(parts[1]) == 0) {
-			printf("ERROR: No path is supplied\n");
-		} else {
-			if(chdir(parts[1]) < 0) {
-				printf("ERROR: \"%s\" is not a valid path. (%s)\n", parts[1], strerror(errno));
-				errno = 0;
-
-			}
-		}
-
-		return true;
-	}
-
-	return false;
 }
 
 void execute_command(char **parts) {
