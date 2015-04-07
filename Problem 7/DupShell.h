@@ -22,4 +22,4 @@
 void explode_command(char *command, char **parts, uint16_t max_parts);
 bool is_exit_command(char **parts);
 bool is_cd_command(char **parts);
-void execute_command(char **parts, int input, int output);
+void execute_command(char **parts);

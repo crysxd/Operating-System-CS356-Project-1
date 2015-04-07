@@ -46,7 +46,7 @@ int main(int argc, char const *argv[]) {
 		}
 
 		/* Execute command */
-		execute_command(command_parts, -1, -1);
+		execute_command(command_parts);
 	}
 
 	return 0;
@@ -136,7 +136,7 @@ bool is_cd_command(char **parts) {
 	return false;
 }
 
-void execute_command(char **parts, int input, int output) {
+void execute_command(char **parts) {
 	/* Copy command parts to add a NULL at the end */
 	char *parts_new[COMMAND_MAX_PARTS] = {NULL};
 	uint16_t pipe_found = 0;
