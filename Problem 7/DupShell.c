@@ -26,6 +26,11 @@ int main(int argc, char const *argv[]) {
 		/* Read command */
 		fgets(command, COMMAND_MAX_LENGTH, stdin);
 
+		/* Check if the command is empty (only line break) */
+		if(strlen(command) == 1) {
+			continue;
+		}
+
 		/* Explode parts */
 		explode_command(command, command_parts, sizeof(command_parts));
 
