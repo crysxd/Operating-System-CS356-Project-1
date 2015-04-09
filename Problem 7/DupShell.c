@@ -51,109 +51,154 @@ void explode_command(char *command, char **parts, uint16_t max_parts) {
 	/* Declare counters */
 	uint16_t parts_count = 0;
 	uint16_t part_length = 0;
+	uint16_t i = 0;
 	uint8_t state = 0;
-	uint16_t length = strlen(command);
+	bool command_end = false;
 
-	for(uint16_t i=0; i<length; i++) {
-		char c = command[i];
+	/* Iterate over command */
+	while(!command_end) {
+		/* Read current char */
+		char c = command[i++];
 
+		/* State machine described in readme */
 		switch(state) {
+			/* State 0: Default */
 			case 0: {
+				/* If c is a backslash, go directly to next 
+				   char and skipp state transitions */
 				if(c == '\\') {
-					c = command[++i];
-				} else {
+					c = command[i++];
+				} 
+
+				/* Else check if there must be a state change */ 
+				else {
+					/* Space -> go to state 4 */
 					if(c == ' ') {
 						state = 4;
-						i--;
 						break;
 					}
 
+					/* Quote -> go to state 2 */
 					if(c == '"') {
 						state = 2;
 						break;
 					}
 
+					/* Singleqoute -> go to state 3 */
 					if(c == '\'') {
 						state = 3;
 						break;
 					}
 
+					/* Pipe -> go to state 1 */
 					if(c == '|') {
 						state = 1;
 						break;
 					}
 				}
 
-				parts[parts_count][part_length++] = c;
+				/* Zero -> command end */
+				if(c == '\0') {
+					command_end = true;
+					break;
+				}
 
+				/* Still in state 1? Copy the char to the current part */
+				parts[parts_count][part_length++] = c;
 				break;
 
 			}
 
+			/* State 1: Pipe */
 			case 1: {
+				/* If the previous part is already filled, end it and increment 
+				   parts_count to start a new part */
 				if(part_length > 0) {
 					parts[parts_count++][part_length] = '\0';
 				}
 
+				/* Create a pipe part and increment 
+				   parts_count to start a new part */
 				parts[parts_count][0] = '|';
 				parts[parts_count++][1] = '\0';
 				part_length = 0;
+
+				/* Set state to 0 and re-do the current char to realize the
+				   epsilon transition to state 0 */
 				state = 0;
 				i--;
 
 				break;
 			}
 
+			/* State 2: Double-quote */
 			case 2: {
+				/* If the current char is a double-quote, go back to state 0 */
 				if(c == '"') {
 					state = 0;
-					i--;
 					break;
 				}
 
+				/* Zero -> command end */
+				if(c == '\0') {
+					command_end = true;
+					break;
+				}
+
+				/* If the current char is a backslash, ignore it and copy the 
+				   next char. This escapes the next char if it is a 
+				   double-quote */
 				if(c == '\\') {
 					c = command[++i];
 				}
 
+				/* Copy the current part */
 				parts[parts_count][part_length++] = c;
 
 				break;
 			}
 
+			/* State 3: Single-quote */
 			case 3: {
+				/* If the current char is a single-quote, go back to state 0 */
 				if(c == '\'') {
 					state = 0;
-					i--;
 					break;
 				}
 
+				/* Zero -> command end */
+				if(c == '\0') {
+					command_end = true;
+					break;
+				}
+
+				/* If the current char is a backslash, ignore it and copy the 
+				   next char. This escapes the next char if it is a 
+				   single-quote */
 				if(c == '\\') {
 					c = command[++i];
 				}
 
+				/* Copy the current part */
 				parts[parts_count][part_length++] = c;
 
 				break;
 			}
 
 			case 4: {
-				if(c != ' ') {
-					state = 0;
-					i--;
-					break;
-				}
-
+				/* If the previous part is already filled, end it and increment 
+				   parts_count to start a new part */
 				if(part_length > 0) {
 					parts[parts_count++][part_length] = '\0';
 					part_length = 0;
 				}
 
+				/* Set state to 0 and re-do the current char to realize the
+				   epsilon transition to state 0 */
+				state = 0;
+				i--;
 
 				break;
-			}
-
-			default: {
-
 			}
 		}
 	}
