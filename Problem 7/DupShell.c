@@ -23,8 +23,9 @@ int main(int argc, char const *argv[]) {
 		/* Print prompt */
 		printf(COMMAND_PROMPT);
 
-		/* Read command */
+		/* Read command and remove line breal */
 		fgets(command, COMMAND_MAX_LENGTH, stdin);
+		command[strlen(command)-1] = 0;
 
 		/* Check if the command is empty (only line break) */
 		if(strlen(command) == 1) {
@@ -48,33 +49,22 @@ int main(int argc, char const *argv[]) {
 
 void explode_command(char *command, char **parts, uint16_t max_parts) {
 	/* Declare counters */
-	uint16_t part_start = 0, i = 0, parts_count = 0;
+	uint16_t parts_count = 0;
 
-	/* Determine the length of the command */
-	uint16_t command_length = strlen(command);
+	char delimiter[] = " ";
+	char *ptr;
 
-	/* Iterate over commanf */
-	while(command[i++] != 0) {
-		/* If the current char is a space or we are at the end */
-		if(command[i] == ' ' || i == command_length - 1) {
-			/* Copy the current part in the parts array */
-			memcpy(*(parts + parts_count), command + part_start, i - part_start);
+	// initialisieren und ersten Abschnitt erstellen
+	ptr = strtok(command, delimiter);
 
-			/* Add string terminator at the end */
-			parts[parts_count][i - part_start] = 0;
+	while(ptr != NULL) {
+		uint16_t length = strlen(ptr);
+		memcpy(*(parts+parts_count), ptr, length);
+		parts[parts_count][length] = 0;
+		parts_count++;
 
-			/* Skip all comming spaces (so double spaces make no problems) */
-			while(command[i+1] == ' ') {
-				i++;
-			}
-
-			/* Set the new part start to the next char */
-			part_start = i + 1;
-
-			/* Increment the number of parts */
-			parts_count++;
-		}
-
+		// naechsten Abschnitt erstellen
+	 	ptr = strtok(NULL, delimiter);
 	}
 
 	/* Set the net part to a empty String to identify the end */
@@ -94,6 +84,7 @@ void execute_command(char **parts) {
 
 	/* Cancel as soon as an empty command is found */
 	for(uint8_t i=0; i<COMMAND_MAX_PARTS; i++) {
+		printf("> %s\n", parts[i]);
 		/* Empty command marks the end */
 		if(strlen(parts[i]) == 0) {
 			/* Error if first part is empty */
