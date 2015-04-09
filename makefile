@@ -2,7 +2,7 @@ CC     = @/usr/bin/gcc
 CFLAGS = -Wall -g -std=c99
 ECHO   = @echo
 
-all: directories MyCopy ForkCopy PipeCopy StopWatch MyShell MoreShell DupShell complete
+all: directories MyCopy ForkCopy PipeCopy StopWatch MyShell MoreShell DupShell MergesortSingle complete
 
 clean:
 	@rm -rf bin
@@ -39,6 +39,10 @@ MoreShell: directories
 DupShell: directories
 	$(CC) $(CFLAGS) "Problem 7/DupShell.c" -o bin/DupShell
 	$(ECHO) "Build DupShell {Problem 7}"
+
+MergesortSingle: directories
+	$(CC) $(CFLAGS) "Problem 8/MergesortSingle.c" -o bin/MergesortSingle
+	$(ECHO) "Build MergesortSingle {Problem 8}"
 
 complete:
 	$(ECHO) "All binaries build to directory 'bin/'"
