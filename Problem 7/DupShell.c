@@ -50,26 +50,117 @@ int main(int argc, char const *argv[]) {
 void explode_command(char *command, char **parts, uint16_t max_parts) {
 	/* Declare counters */
 	uint16_t parts_count = 0;
+	uint16_t part_length = 0;
+	uint8_t state = 0;
+	uint16_t length = strlen(command);
 
-	char delimiter[] = " ";
-	char *ptr;
+	for(uint16_t i=0; i<length; i++) {
+		char c = command[i];
 
-	// initialisieren und ersten Abschnitt erstellen
-	ptr = strtok(command, delimiter);
+		switch(state) {
+			case 0: {
+				if(c == '\\') {
+					c = command[++i];
+				} else {
+					if(c == ' ') {
+						state = 4;
+						i--;
+						break;
+					}
 
-	while(ptr != NULL) {
-		uint16_t length = strlen(ptr);
-		memcpy(*(parts+parts_count), ptr, length);
-		parts[parts_count][length] = 0;
-		parts_count++;
+					if(c == '"') {
+						state = 2;
+						break;
+					}
 
-		// naechsten Abschnitt erstellen
-	 	ptr = strtok(NULL, delimiter);
+					if(c == '\'') {
+						state = 3;
+						break;
+					}
+
+					if(c == '|') {
+						state = 1;
+						break;
+					}
+				}
+
+				parts[parts_count][part_length++] = c;
+
+				break;
+
+			}
+
+			case 1: {
+				if(part_length > 0) {
+					parts[parts_count++][part_length] = '\0';
+				}
+
+				parts[parts_count][0] = '|';
+				parts[parts_count++][1] = '\0';
+				part_length = 0;
+				state = 0;
+				i--;
+
+				break;
+			}
+
+			case 2: {
+				if(c == '"') {
+					state = 0;
+					i--;
+					break;
+				}
+
+				if(c == '\\') {
+					c = command[++i];
+				}
+
+				parts[parts_count][part_length++] = c;
+
+				break;
+			}
+
+			case 3: {
+				if(c == '\'') {
+					state = 0;
+					i--;
+					break;
+				}
+
+				if(c == '\\') {
+					c = command[++i];
+				}
+
+				parts[parts_count][part_length++] = c;
+
+				break;
+			}
+
+			case 4: {
+				if(c != ' ') {
+					state = 0;
+					i--;
+					break;
+				}
+
+				if(part_length > 0) {
+					parts[parts_count++][part_length] = '\0';
+					part_length = 0;
+				}
+
+
+				break;
+			}
+
+			default: {
+
+			}
+		}
 	}
+	
+	parts[parts_count++][part_length] = '\0';
+	parts[parts_count][0] = '\0';
 
-	/* Set the net part to a empty String to identify the end */
-	char c = '\0';
-	memcpy(*(parts + parts_count), &c, 1);
 }
 
 bool is_exit_command(char **parts) {
@@ -84,7 +175,6 @@ void execute_command(char **parts) {
 
 	/* Cancel as soon as an empty command is found */
 	for(uint8_t i=0; i<COMMAND_MAX_PARTS; i++) {
-		printf("> %s\n", parts[i]);
 		/* Empty command marks the end */
 		if(strlen(parts[i]) == 0) {
 			/* Error if first part is empty */
