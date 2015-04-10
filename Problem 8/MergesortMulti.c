@@ -4,7 +4,7 @@
  * Description: Merge sort algorithm with multiple threads.
  */
 
-#define SAMPLE_DATA_LENGTH 100
+#define SAMPLE_DATA_LENGTH 10000000
 
 #include <stdio.h>
 #include <inttypes.h>
@@ -76,23 +76,39 @@ void *sort(void *args_v) {
   		/* Find center */
     	uint32_t center = (args.low + args.high) / 2;
 
-    	/* Create two threads and let them execute the function recursivly */
-    	pthread_t tid[2];
+    	/* Create args */
     	sort_args_t a[2];
 
     	a[0].data = args.data;
     	a[0].low = args.low;
     	a[0].high = center;
-    	pthread_create(&tid[0], NULL, sort, (void*) a);
 
     	a[1].data = args.data;
     	a[1].low = center + 1;
     	a[1].high = args.high;
-    	pthread_create(&tid[1], NULL, sort, (void*) (a+1));
 
-    	/* Wait for both to finish */
-    	pthread_join(tid[0], NULL);
-    	pthread_join(tid[1], NULL);
+    	/* Only use threads if a considerable amount of elements 
+    	   must be sorted */
+    	if(args.high - args.low > 200000) {
+    		/* Create a thread and let it execute the
+    		   function recursivly */
+    		pthread_t tid;
+    		pthread_create(&tid, NULL, sort, (void*) a);
+
+    		/* Use the current thread to execute the other half */
+	    	pthread_join(tid[1], NULL);
+
+	    	/* Wait for thread to finish */
+	    	pthread_join(tid, NULL);
+    	} 
+
+    	/* Not enough elements for parallel computing, do it sequential */
+    	else {
+    		sort((void*) a);
+    		sort((void*) (a+1));
+
+    	}
+
 
     	/* Merge them togheter */
     	merge(args.data, args.low, center, args.high);

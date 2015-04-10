@@ -4,7 +4,7 @@
  * Description: Merge sort algorithm.
  */
 
-#define SAMPLE_DATA_LENGTH 100
+#define SAMPLE_DATA_LENGTH 10000000
 
 #include <stdio.h>
 #include <inttypes.h>
