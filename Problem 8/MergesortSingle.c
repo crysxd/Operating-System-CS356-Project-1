@@ -22,9 +22,6 @@ void merge(uint8_t *data, uint32_t low, uint32_t center, uint32_t high);
 /* Checks if value at i is bigger as i+1, therefore checks the success of the sort */
 void verify(uint8_t *data, uint32_t length);
 
-/* Prints all numbers in data */
-void print(uint8_t *data, uint32_t length);
-
 int main(int argc, char const *argv[]) {
 	/* Init random number generator */
 	srand(time(NULL));
@@ -36,16 +33,14 @@ int main(int argc, char const *argv[]) {
 		data[i] = rand() % 255;
 	}
 
-	/* Print data */
-	printf("DATA:\n");
-	print(data, SAMPLE_DATA_LENGTH);
+	/* Print status */
+	printf("Data generated.\nSorting...\n");
 
 	/* Sort */
 	sort(data, 0, SAMPLE_DATA_LENGTH - 1);
 
-	/* Print data */
-	printf("SORTED DATA:\n");
-	print(data, SAMPLE_DATA_LENGTH);
+	/* Print status */
+	printf("Data sorted.\n");
 
 	/* Verfiy result */
 	verify(data, SAMPLE_DATA_LENGTH);
@@ -130,23 +125,4 @@ void verify(uint8_t *data, uint32_t length) {
 
 	/* If we get here everything is ok */
 	printf("SUCESS: Result verfied.\n");
-}
-
-void print(uint8_t *data, uint32_t length) {
-	/* Start with tab */
-	printf("\t");
-
-	/* Iterate over data */
-	for(uint32_t i=0; i<length; i++) {
-		/* Print value */
-		printf("%d, ", data[i]);
-
-		/* Line break and tab afer each 20th element, but not after the first */
-		if(i>0 && i%20 == 0) {
-			printf("\n\t");
-		}
-	}
-
-	/* New Line at end */
-	printf("\n");
 }
