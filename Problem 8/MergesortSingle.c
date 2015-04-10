@@ -8,8 +8,6 @@
 
 #include <stdio.h>
 #include <inttypes.h>
-#include <string.h>
-#include <errno.h> 
 #include <time.h>
 #include <stdlib.h>
 
