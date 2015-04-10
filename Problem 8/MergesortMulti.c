@@ -87,7 +87,10 @@ void *sort(void *args_v) {
     		/* Create a thread and let it execute the
     		   function recursivly */
     		pthread_t tid;
-    		pthread_create(&tid, NULL, sort, (void*) a);
+    		if(pthread_create(&tid, NULL, sort, (void*) a) != 0) {
+    			printf("ERROR: Thread creation failed!\n");
+    			exit(1);
+    		}
 
     		/* Use the current thread to execute the other half */
     		sort((void*) (a+1));
