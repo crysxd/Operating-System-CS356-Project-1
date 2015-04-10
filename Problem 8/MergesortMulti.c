@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+/* Structure for passing arguments to sort functin */
 typedef struct {
 	uint8_t *data;
 	uint32_t low;
