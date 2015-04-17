@@ -14,27 +14,27 @@
 #include <pthreads.h>
 #include <stdbool.h>
 
-void cook_run();
-void cashier_run();
-void customer_run();
+void *cook_run();
+void *cashier_run();
+void *customer_run();
 
 int main(int argc, char **argv) {
 
 }
 
-void cook_run() {
+void *cook_run() {
 	while(1) {
 
 	}
 }
 
-void cashier_run() {
+void *cashier_run() {
 	while(1) {
 
 	}
 }
 
-void customer_run() {
+void *customer_run() {
 	while(1) {
 
 	}
