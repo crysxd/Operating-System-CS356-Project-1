@@ -1,0 +1,1 @@
+parallels@ubuntu:/media/psf/Home/GitHub/Operating-System-CS356-Project-1$ ./ForkCopy DupShell /usr/nofileERROR: Unable to create destination file "/usr/nofile" (Permission denied)ERROR: Child process finished abnormally with status 2

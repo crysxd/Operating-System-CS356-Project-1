@@ -1,0 +1,4 @@
+- Sample runs are provided in "Problem X/log"
+- All binaries are build in "bin/"
+- StopWatch (problem 4) and ForkCopy (problem 2) must be runned in "bin/" directory!
+- Documentation for each program is provied in Documentation.pdf

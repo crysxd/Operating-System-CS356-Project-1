@@ -1,0 +1,1 @@
+parallels@ubuntu:/media/psf/Home/GitHub/Operating-System-CS356-Project-1$ ./ForkCopy nofile testERROR: Unable to open source file "nofile" (No such file or directory)ERROR: Child process finished abnormally with status 1

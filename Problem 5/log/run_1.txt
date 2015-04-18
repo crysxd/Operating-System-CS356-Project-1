@@ -1,0 +1,1 @@
+parallels@ubuntu:/media/psf/Home/GitHub/Operating-System-CS356-Project-1/bin$ ./MyShell myshell> lsBBC  DupShell  ForkCopy  MergesortMulti  MergesortSingle  MoreShell  MyCopy  MyShell  PipeCopy	StopWatchmyshell> ls -lERROR: No such command.myshell> exit
