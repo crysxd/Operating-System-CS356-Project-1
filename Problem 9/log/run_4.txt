@@ -1,0 +1,90 @@
+[COOK 0]	 CREATED.
+[COOK 1]	 CREATED.
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[COOK 1]	 Placed new burger in rack.
+[COOK 2]	 CREATED.
+[CASHIER 0]	 CREATED.
+[CASHIER 1]	 CREATED.
+[CUSTOMER 0]	 CREATED.
+[CUSTOMER 1]	 CREATED.
+[CUSTOMER 2]	 CREATED.
+[CUSTOMER 3]	 CREATED.
+[CASHIER 0]	 Serving customer.
+[CUSTOMER 1]	 Approached cashier no. 0.
+[CUSTOMER 1]	 Placing order to cashier no. 0.
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[COOK 2]	 Placed new burger in rack.
+[CASHIER 1]	 Serving customer.
+[CUSTOMER 2]	 Approached cashier no. 1.
+[CUSTOMER 2]	 Placing order to cashier no. 1.
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[COOK 0]	 Placed new burger in rack.
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[COOK 1]	 Placed new burger in rack.
+[CASHIER 0]	 Got order.
+[CASHIER 0]	 Going to rack to get burger...
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[CASHIER 0]	 Got burger from rack, going back
+[CASHIER 1]	 Got order.
+[CASHIER 1]	 Going to rack to get burger...
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[CASHIER 1]	 Got burger from rack, going back
+[CASHIER 0]	 Gave burger to customer.
+[CASHIER 0]	 Serving customer.
+[CASHIER 1]	 Gave burger to customer.
+[CUSTOMER 2]	 Got burger from cashier no. 1. Thank you!
+[CUSTOMER 3]	 Approached cashier no. 0.
+[CUSTOMER 2]	 DONE.
+[CUSTOMER 3]	 Placing order to cashier no. 0.
+[CUSTOMER 1]	 Got burger from cashier no. 0. Thank you!
+[CUSTOMER 1]	 DONE.
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[COOK 2]	 Placed new burger in rack.
+[CASHIER 1]	 Serving customer.
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[COOK 0]	 Placed new burger in rack.
+[CUSTOMER 0]	 Approached cashier no. 1.
+[CUSTOMER 0]	 Placing order to cashier no. 1.
+[CASHIER 1]	 Got order.
+[CASHIER 1]	 Going to rack to get burger...
+[CASHIER 0]	 Got order.
+[CASHIER 0]	 Going to rack to get burger...
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[CASHIER 1]	 Got burger from rack, going back
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[COOK 1]	 Placed new burger in rack.
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[CASHIER 1]	 Gave burger to customer.
+[CASHIER 0]	 Got burger from rack, going back
+[CUSTOMER 0]	 Got burger from cashier no. 1. Thank you!
+[CUSTOMER 0]	 DONE.
+[ASSURE_STATE]	 State consistent.
+[ASSURE_STATE]	 State consistent.
+[COOK 2]	 Placed new burger in rack.
+[CASHIER 0]	 Gave burger to customer.
+[CUSTOMER 3]	 Got burger from cashier no. 0. Thank you!
+[CUSTOMER 3]	 DONE.
+[MAIN]		 SUCCESS: All customers terminated
+
+----------------
+
+[MAIN]		 SUCCESS: Starting Cleanup
+[COOK 2]	 DONE.
+[COOK 1]	 DONE.
+[CASHIER 1]	 DONE.
+[COOK 0]	 DONE.
+[MAIN]		 SUCCESS: Told all threads to terminate themselves
+[CASHIER 0]	 DONE.
+[ASSURE_STATE]	 State consistent.
+[MAIN]		 SUCCESS: All threads terminated, state consistent.
