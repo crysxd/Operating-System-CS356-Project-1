@@ -17,6 +17,7 @@
 #include <inttypes.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <time.h>
 
 /* Flag which will be set to true when the threads should terminate themselfs */
 bool interrupt = false;
@@ -57,6 +58,9 @@ cashier_t cashier_exchange;
 uint8_t burger_count = 0;
 
 int main(int argc, char **argv) {
+	/* Init random number generator */
+	srand(time(NULL));
+
 	/* Init all semaphores */
 	sem_init(&rack, 0, 1);
 	sem_init(&cashier, 0, 1);
