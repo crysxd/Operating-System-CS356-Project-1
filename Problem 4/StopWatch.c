@@ -82,7 +82,7 @@ int main(int argc, char const *argv[]) {
  			printf("ERROR: Child process finished abnormally with status %d\n", status);
 
  			if(status == EXECLP_ERROR) {
- 				printf("HINT: execlp() failed. Please make shure that you call PipeCopy in the bin folder and all needed programs are also in the bin folder.\n");
+ 				printf("HINT: execlp() failed. Please make sure that you call PipeCopy in the bin folder and all needed programs are also in the bin folder.\n");
  			}
 
  			/* cleanup the files */
