@@ -102,7 +102,7 @@ int main(int argc, char const *argv[]) {
 		}		
 
 		/* Copy from file to pipe */
-		if(copy(src, fd[1], 2) < 0) {
+		if(copy(src, fd[1], 1) < 0) {
 			printf("ERROR: error while copying: %s\n", strerror(errno));	
 			close(src);
 			close(fd[1]);
