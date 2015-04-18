@@ -8,42 +8,29 @@ SUBMITTED FILES:
 	- makefile					| makefile building all binaries to bin/
 	- Prj1README.txt			| readme file
 	- Documentation.pdf			| small documentation for all problems
-	- Problem 1					| directory containing ptoblem 1
+	- log.txt					| log file containing runs of all programs
+	- Problem 1					| 
 		- MyCopy.c 				| implementation of problem 1
-		- log.txt				| log file containing multiple runs of MyCopy
-	- Problem 2					| directory containing ptoblem 2
+	- Problem 2					| 
 		- ForkCopy.c 			| implementation of problem 2
-		- log.txt				| log file containing multiple runs of ForkCopy
-	- Problem 3					| directory containing ptoblem 3
+	- Problem 3					| 
 		- PipeCopy.c 			| implementation of problem 3
-		- log.txt				| log file containing multiple runs of PipeCopy
-	- Problem 4					| directory containing ptoblem 4
+	- Problem 4					| 
 		- StopWatch.c 			| programm calling all copy programs to test their performance
-		- log.txt				| log file containing multiple runs of StopWatch
-	- Problem 5					| directory containing ptoblem 5
+	- Problem 5					| 
 		- MyShell.h 			| implementation of problem 5 (header file)
 		- MyShell.c 			| implementation of problem 5
-		- log.txt				| log file containing multiple runs of MyShell
-	- Problem 6					| directory containing ptoblem 6
+	- Problem 6					| 
 		- MoreShell.h 			| implementation of problem 6 (header file)
 		- MoreShell.c 			| implementation of problem 6
-		- log.txt				| log file containing multiple runs of MoreShell
-	- Problem 7					| directory containing ptoblem 7
+	- Problem 7					| 
 		- DupShell.h 			| implementation of problem 7 (header file)
 		- DupShell.c 			| implementation of problem 7
-		- log.txt				| log file containing multiple runs of DupShell
-	- Problem 8					| directory containing ptoblem 8
+	- Problem 8					| 
 		- MergesortSignle.c		| implementation of problem 8 (single threaded)
 		- MergesortMulti.c		| implementation of problem 8 (multi threaded)
-		- log.txt				| log file containing multiple runs of Mergesort
-	- Problem 9					| directory containing ptoblem 9
+	- Problem 9					| 
 		- BurgerBuddies.c		| implementation of problem 9
-		- log_1.txt				| first sample run of BBC
-		- log_2.txt				| second sample run of BBC
-		- log_3.txt				| third sample run of BBC
-		- log_4.txt				| fourth sample run of BBC
-		- log_5.txt				| fifth sample run of BBC
-		- log_forced_error.txt	| sample run SIMULATING an synchronization error
 
 TEST ENVIRONMENT:
 	- Ubuntu 13.04
