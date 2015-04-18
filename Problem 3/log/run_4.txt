@@ -1,1 +1,0 @@
-parallels@ubuntu:/media/psf/Home/GitHub/Operating-System-CS356-Project-1$ ./PipeCopy DupShellERROR: Too few arguments. Usage: ./PipeCopy src dest

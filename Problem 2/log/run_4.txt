@@ -1,1 +1,0 @@
-parallels@ubuntu:/media/psf/Home/GitHub/Operating-System-CS356-Project-1$ ./ForkCopy nofileERROR: Too few arguments. Usage: ./MyCopy src destERROR: Child process finished abnormally with status 3

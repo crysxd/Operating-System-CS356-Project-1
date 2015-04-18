@@ -1,1 +1,0 @@
-parallels@ubuntu:/media/psf/Home/GitHub/Operating-System-CS356-Project-1$ ./PipeCopy DupShell /usr/nofileERROR: Unable to open destination file "/usr/nofile" (Permission denied)ERROR: Child 2 finished abnormally with status 1[1] 1024 bytes copied...SUCCESS: Child 1 finished normally.ERROR: One or more child finished abnormally. Operation failed.
