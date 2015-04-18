@@ -22,6 +22,12 @@
 int16_t copy(int src, int dest, int pid);
 
 int main(int argc, char const *argv[]) {
+	/* Check number of arguments and print manual */
+	if(argc < 3) {
+		printf("ERROR: Too few arguments. Usage: ./PipeCopy src dest\n");
+		return 3;
+	}
+
 	/* Create ordinary pipe */
 	int fd[2];
 	if (pipe(fd)) {
