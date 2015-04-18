@@ -4,6 +4,8 @@ GENRAL:
 	- StopWatch (problem 4) and ForkCopy (problem 2) must be runned in "bin/" directory!
 	- Documentation for each program is provied in Documentation.pdf
 
+
+
 SUBMITTED FILES:
 	- makefile					| makefile building all binaries to bin/
 	- Prj1README.txt			| readme file
@@ -16,7 +18,7 @@ SUBMITTED FILES:
 	- Problem 3					| 
 		- PipeCopy.c 			| implementation of problem 3
 	- Problem 4					| 
-		- StopWatch.c 			| programm calling all copy programs to test their performance
+		- StopWatch.c 			| programm calling all copy programs to test their performance (see notes below!)
 	- Problem 5					| 
 		- MyShell.h 			| implementation of problem 5 (header file)
 		- MyShell.c 			| implementation of problem 5
@@ -31,6 +33,30 @@ SUBMITTED FILES:
 		- MergesortMulti.c		| implementation of problem 8 (multi threaded)
 	- Problem 9					| 
 		- BurgerBuddies.c		| implementation of problem 9
+
+
+
+NOTES PROBLEM 4:
+	In order to measure the execution times of MyCopy, ForkCopy and PipeCopy a new program
+	called StopWatch was implemented. StopWatch forks a child and executes the copy programs
+	in it. The time the child needs to complete is measured. 
+	Because clock() estimates the CPU time needed by the process the result for the measurment
+	with clock() is always zero. The parent process is in blocked state after calling wait() 
+	and therefor needs no CPU time. Additionally, the return value of clock() is incremented in
+	10^4 steps and CLOCKS_PER_SEC is 10^6 on POSIX compliant systems. This leeds to a poor
+	precision of 10ms using clock().
+
+	The result of the measurements are shown in the following table:
+	============================================================================
+	| Program        | clock()	 | gettimeofday()	 	 | clock_gettime()	   |
+	----------------------------------------------------------------------------
+	| cp             | 0.000ms	 | 157.469970703125ms	 | 157.468261718750ms  |
+	| ./MyCopy       | 0.000ms	 | 783.482910156250ms	 | 783.483398437500ms  |
+	| ./ForkCopy     | 0.000ms	 | 779.437011718750ms	 | 779.438232421875ms  |
+	| ./PipeCopy     | 0.000ms	 | 2515.257812500000ms	 | 2515.258789062500ms |
+	============================================================================
+
+
 
 TEST ENVIRONMENT:
 	- Ubuntu 13.04
