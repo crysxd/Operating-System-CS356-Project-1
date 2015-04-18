@@ -46,6 +46,18 @@ int main(int argc, char const *argv[]) {
 		printf("%" PRIu64 " bytes copied...\n", copied_count);
 	}
 
+	/* Check if a error occured while reading the source file */
+	if(ferror(src)) {
+		printf("ERROR: failure while reading the source file!\n");
+		return 3;
+	}
+
+	/* Check if a error occured while writing the destination file */
+	if(ferror(dest)) {
+		printf("ERROR: failure while writing the destination file!\n");
+		return 4;
+	}
+
 	/* Print success and exit */
 	printf("SUCCESS.\n");
 	return 0;
