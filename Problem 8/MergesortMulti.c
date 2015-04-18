@@ -83,7 +83,7 @@ void *sort(void *args_v) {
 
 		/* Only use threads if a considerable amount of elements 
 		   must be sorted */
-		if(args.high - args.low > 200000) {
+		if(args.high - args.low > 2000000) {
 			/* Create a thread and let it execute the
 			   function recursivly */
 			pthread_t tid;
@@ -91,6 +91,8 @@ void *sort(void *args_v) {
 				printf("ERROR: Thread creation failed!\n");
 				exit(1);
 			}
+
+			printf("Spawned new thread\n");
 
 			/* Use the current thread to execute the other half */
 			sort((void*) (a+1));
