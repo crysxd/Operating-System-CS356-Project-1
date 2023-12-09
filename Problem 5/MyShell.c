@@ -4,7 +4,7 @@
  * Description: Simple shell application.
  */
 
-#include "Myshell.h"
+#include "MyShell.h"
 
 int main(int argc, char const *argv[]) {
 	/* Create buffer for command */
