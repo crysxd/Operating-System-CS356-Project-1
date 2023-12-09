@@ -5,6 +5,7 @@
  */
 
 #include "DupShell.h"
+#include<signal.h>
 
 int main(int argc, char const *argv[]) {
 	/* Create buffer for command */
